@@ -1,6 +1,3 @@
-import os
-from dotenv import load_dotenv
-import snowflake.connector
 import pandas as pd
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import LabelEncoder
@@ -9,18 +6,7 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 from imblearn.over_sampling import SMOTE
 import pickle
 
-load_dotenv()
-
-conn = snowflake.connector.connect(
-    user=os.getenv("SNOWFLAKE_USER"),
-    password=os.getenv("SNOWFLAKE_PASSWORD"),
-    account=os.getenv("SNOWFLAKE_ACCOUNT"),
-    warehouse=os.getenv("SNOWFLAKE_WAREHOUSE"),
-    database=os.getenv("SNOWFLAKE_DATABASE"),
-    schema=os.getenv("SNOWFLAKE_SCHEMA"),
-)
-df = pd.read_sql("SELECT * FROM hr_attrition_final;", conn)
-conn.close()
+df = pd.read_csv("data/hr_attrition_final.csv")
 
 # Drop ID column
 data = df.drop(columns=['EMP_ID'])

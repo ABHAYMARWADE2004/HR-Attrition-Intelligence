@@ -1,12 +1,8 @@
-import os
 import streamlit as st
 import pandas as pd
 import pickle
 import plotly.express as px
-from dotenv import load_dotenv
-import snowflake.connector
 
-load_dotenv()
 st.set_page_config(page_title="HR Attrition Analytics", layout="wide", page_icon="🏢")
 
 # ---- Custom styling: bigger metric font ----
@@ -37,17 +33,8 @@ columns = saved["columns"]
 
 @st.cache_data(ttl=600)
 def load_data():
-    conn = snowflake.connector.connect(
-        user=os.getenv("SNOWFLAKE_USER"),
-        password=os.getenv("SNOWFLAKE_PASSWORD"),
-        account=os.getenv("SNOWFLAKE_ACCOUNT"),
-        warehouse=os.getenv("SNOWFLAKE_WAREHOUSE"),
-        database=os.getenv("SNOWFLAKE_DATABASE"),
-        schema=os.getenv("SNOWFLAKE_SCHEMA"),
-    )
-    df = pd.read_sql("SELECT * FROM hr_attrition_final;", conn)
-    conn.close()
-    return df
+    # Data snapshot of the hr_attrition_final table (originally built in Snowflake)
+    return pd.read_csv("data/hr_attrition_final.csv")
 
 df = load_data()
 
@@ -71,6 +58,10 @@ with tab1:
         df["DEPARTMENT"].isin(dept_filter)
         & df["YEARS_AT_COMPANY"].between(yrs_range[0], yrs_range[1])
     ]
+
+    if fdf.empty:
+        st.warning("Selected filters me koi data nahi hai. Department ya tenure range badlo.")
+        st.stop()
 
     # ---- Cross-filter: click a bar in the Department chart to drill down ----
     st.caption("💡 Click a bar in the Department chart below to cross-filter all other charts.")
