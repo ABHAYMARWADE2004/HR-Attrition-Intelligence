@@ -172,6 +172,7 @@ python -m streamlit run app.py
 ## 👨‍💻 Author
 
 **Abhay Marwade**
+
 Aspiring Data Analyst | Data Science & AI Enthusiast
 
 - GitHub: https://github.com/ABHAYMARWADE2004
