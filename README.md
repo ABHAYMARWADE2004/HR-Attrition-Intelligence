@@ -96,6 +96,20 @@ The data is saved inside the .pbix file. Please don't click Refresh, because it 
 - More risk factors means more attrition. It goes from 10.8% with no risk factors to about 77% with four.
 - HR has the highest attrition (33.4%) and Finance the lowest (24.7%).
 
+## What HR can do
+
+Based on what I found, these are the things I would suggest HR looks at first:
+
+1. **Check overtime.** People doing overtime left a lot more (41.6% against 23.3%). HR can look at the teams with the most overtime and see if the workload is too high.
+2. **Look at low salaries.** Attrition was 42.9% for people earning below 45K a month. HR can review pay for this group first.
+3. **Help new joiners.** People in their first year left the most (40.2%). Better onboarding and regular check-ins in the first year could help.
+4. **Talk to people with low job satisfaction.** Employees who rated satisfaction 1 or 2 left much more. Short surveys and talks with managers can catch problems early.
+5. **Think about long distances.** People living 21 km or more away left more (36.3%). Work from home days or transport help could be an option.
+6. **Start with the right departments.** Sales and Engineering lose the most people in numbers (391 and 380). HR and Marketing have the highest rates (33.4% and 31.7%).
+7. **Use the risk list.** In the Power BI dashboard, 1,118 current employees have 2 or more risk factors. Managers can talk to them first.
+
+These suggestions come from patterns in my synthetic data. They show what is linked to attrition, not proof of what causes it.
+
 ## The model
 
 I used a Random Forest. Only about 29% of employees left, so the classes are uneven. I used SMOTE on the training data to balance it, and tuned the model with GridSearchCV. I kept 20% of the data aside for testing.
@@ -172,7 +186,6 @@ python -m streamlit run app.py
 ## 👨‍💻 Author
 
 **Abhay Marwade**
-
 Aspiring Data Analyst | Data Science & AI Enthusiast
 
 - GitHub: https://github.com/ABHAYMARWADE2004
