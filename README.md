@@ -2,19 +2,30 @@
 
 This is my project on employee attrition. I took HR data, cleaned it with SQL in Snowflake, looked at why people leave, trained a model to predict who might leave, and made a Streamlit app and a Power BI dashboard to show the results.
 
-Live app: https://hr-attrition-intelligence-adzrfc9t4ztbjwglgojzvc.streamlit.app/
-
-![Power BI overview](outputs/powerbi_executive_overview.png)
+**Live app:** https://hr-attrition-intelligence-adzrfc9t4ztbjwglgojzvc.streamlit.app/
 
 ## The problem
 
-The project is based on a case study. A company called TechNova has about 5,000 employees in 5 departments (Sales, Engineering, HR, Marketing, Finance). Attrition went up from 18% to 27% in two quarters. HR only found out why people left after they had already left, in exit interviews.
+This project is based on a class case study. The company, TechNova, is made up. It has about 5,000 employees in 5 departments (Sales, Engineering, HR, Marketing, Finance). In the case study, attrition went up from 18% to 27% in two quarters. HR only found out why people left after they had already left, in exit interviews.
 
 So I tried to answer these questions:
 
-1. How many people leave, and which departments, roles and tenure groups are worst?
+1. How many people leave, and which departments, roles and tenure groups are the worst?
 2. What is linked to people leaving (salary, overtime, distance, job satisfaction)?
 3. Can we predict who is likely to leave?
+
+## Tech stack
+
+| Area | Tools |
+|---|---|
+| Cloud storage | AWS S3 |
+| Data warehouse | Snowflake, SQL |
+| Data analysis | Python, pandas, numpy |
+| Machine learning | scikit-learn (Random Forest), imbalanced-learn (SMOTE) |
+| Charts | matplotlib, seaborn, Plotly |
+| App | Streamlit |
+| Dashboard | Power BI |
+| Version control | Git, GitHub |
 
 ## How the data flows
 
@@ -103,19 +114,43 @@ Other things to know:
 - Feature importance only shows what the model used the most. It does not prove what causes people to leave.
 - The model uses age, gender and marital status. In a real HR system these should be checked or removed, because they can lead to unfair results.
 
-## Folders
+## Project folder
 
 ```
-data/          CSV files (source files and hr_attrition_final.csv)
-models/        trained model (attrition_model.pkl)
-outputs/       charts and screenshots
-powerbi/       Power BI file
-sql/           pipeline.sql (Snowflake SQL)
-src/           connect_snowflake.py, eda.py, train_model.py
-app.py         Streamlit app
-main.py        runs the EDA and model training
-rebuild_data.py    makes hr_attrition_final.csv from the source CSVs
-export_snapshot.py exported the final table from Snowflake
+HR-Attrition-Intelligence/
+├── .devcontainer/
+│   └── devcontainer.json
+├── data/
+│   ├── employee_info.csv
+│   ├── performance_attendance.csv
+│   ├── salary_details.csv
+│   └── hr_attrition_final.csv
+├── models/
+│   └── attrition_model.pkl
+├── outputs/
+│   ├── attrition_by_department.png
+│   ├── attrition_by_overtime.png
+│   ├── salary_vs_attrition.png
+│   ├── powerbi_executive_overview.png
+│   ├── powerbi_attrition_drivers.png
+│   ├── powerbi_risk_analysis.png
+│   ├── streamlit_dashboard.png
+│   └── streamlit_predict.png
+├── powerbi/
+│   └── HR_Attrition_Dashboard.pbix
+├── sql/
+│   └── pipeline.sql
+├── src/
+│   ├── connect_snowflake.py
+│   ├── eda.py
+│   └── train_model.py
+├── .gitignore
+├── app.py
+├── export_snapshot.py
+├── main.py
+├── rebuild_data.py
+├── requirements.txt
+└── README.md
 ```
 
 ## How to run it
@@ -132,6 +167,14 @@ python main.py
 python -m streamlit run app.py
 ```
 
-## Tools used
+---
 
-AWS S3, Snowflake, SQL, Python (pandas, scikit-learn, imbalanced-learn, matplotlib, seaborn), Plotly, Streamlit, Power BI, Git and GitHub
+## 👨‍💻 Author
+
+**Abhay Marwade**
+Aspiring Data Analyst | Data Science & AI Enthusiast
+
+- GitHub: https://github.com/ABHAYMARWADE2004
+- LinkedIn: https://www.linkedin.com/in/abhay-marwade-681108295
+
+⭐ If you found this project interesting, feel free to give it a star.
