@@ -132,7 +132,7 @@ These show what is linked to attrition. They do not prove what causes it.
 
 ## 🤖 Machine Learning Model
 
-I used a Random Forest. Only about 29% of employees left, so the classes are uneven. I used SMOTE on the training data to balance it, and tuned the model with GridSearchCV. I kept 20% of the data aside for testing.
+I used a Random Forest. Only about 29% of employees left, so the classes are uneven. I used SMOTE on the training data to balance it, and tuned the model with GridSearchCV. I put SMOTE inside the cross-validation pipeline, so the validation scores are not made better by the extra synthetic rows. I kept 20% of the data aside for testing, and SMOTE was never applied to it.
 
 | Result on test data (people who left) | Value |
 |---|---|
