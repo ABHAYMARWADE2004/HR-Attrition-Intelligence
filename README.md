@@ -1,20 +1,20 @@
 # 📊 HR Attrition Intelligence
 
-An end-to-end HR analytics project. I cleaned HR data with SQL in Snowflake, found out why employees leave, trained a model to predict who might leave, and showed the results in a live Streamlit app and a 3-page Power BI dashboard.
+In this project I looked at what is linked to employees leaving a company. I kept the raw HR files in AWS S3, cleaned them with SQL in Snowflake, studied the patterns, trained a model to guess who might leave, and showed the results in a live Streamlit app and a 3-page Power BI dashboard.
 
 🔗 **Live app:** https://hr-attrition-intelligence-adzrfc9t4ztbjwglgojzvc.streamlit.app/
 
 ---
 
-## 🎯 Project Objective
+## 🎯 What this project is about
 
-This project is based on a class case study. The company, TechNova, is made up. It has about 5,000 employees in 5 departments (Sales, Engineering, HR, Marketing, Finance). In the case study, attrition went from 18% to 27% in two quarters, and HR only learned why people left after they had left.
+This project is based on a class case study. The company, TechNova, is made up. It has about 5,000 employees in 5 departments (Sales, Engineering, HR, Marketing and Finance). In the case study, attrition went from 18% to 27% in two quarters. HR only found out why people left after they had already left.
 
-I built this project to find out why employees leave and to see if a model can predict who is likely to leave.
+I wanted to find out what is linked to people leaving, and to see if a model can guess who may leave next.
 
 ---
 
-## 🛠️ Tools & Technologies
+## 🛠️ Tools I used
 
 | Area | Tools |
 |---|---|
@@ -29,7 +29,7 @@ I built this project to find out why employees leave and to see if a model can p
 
 ---
 
-## 🏗️ Project Flow
+## 🏗️ How the project works
 
 ```
 Source CSV files (employee info, performance, salary)
@@ -41,32 +41,33 @@ AWS S3 (raw/ folder)
 Snowflake: raw tables -> clean tables -> hr_attrition_final
         |
         v
-Python: EDA charts + Random Forest model
+Python: charts + Random Forest model
         |
         +--> Streamlit app
         +--> Power BI dashboard
 ```
 
-- **AWS S3:** I uploaded the source CSV files to a bucket, in a `raw/` folder.
-- **Snowflake:** I made an external stage that points to the S3 folder and loaded the 3 main files (employee info, performance, salary) into 3 raw tables with `COPY INTO`. Then I cleaned them with SQL (trim spaces, change types, remove duplicates, fill missing job satisfaction with 3) and joined them into one table called `hr_attrition_final`. All the SQL is in `sql/pipeline.sql`.
+- **AWS S3:** I uploaded the source files to a bucket, in a `raw/` folder.
+- **Snowflake:** I made an external stage that points to the S3 folder. Then I loaded the 3 main files (employee info, performance and salary) into 3 raw tables with `COPY INTO`.
+- **SQL cleaning:** I trimmed spaces, changed the data types, removed duplicates and filled missing job satisfaction with 3. Then I joined the 3 tables into one table called `hr_attrition_final`. All the SQL is in `sql/pipeline.sql`.
 - **Python:** `src/eda.py` makes the charts and `src/train_model.py` trains the model.
 - **Streamlit and Power BI:** these show the results.
 
-> **Note:** My Snowflake free trial ended, so the app now reads a CSV copy of the final table (`data/hr_attrition_final.csv`). The file `rebuild_data.py` makes the same table from the source CSVs, using the same cleaning steps as the SQL.
+> **Note:** My Snowflake free trial ended, so the app now reads a CSV copy of the final table (`data/hr_attrition_final.csv`). The file `rebuild_data.py` makes the same table from the source files, using the same cleaning steps as the SQL.
 
 ---
 
-## 📌 Key KPIs
+## 📌 Main numbers
 
-| Metric | Value |
+| What | Value |
 |---|---|
 | Total employees | 4,700 |
-| Employees left | 1,359 |
+| Employees who left | 1,359 |
 | Attrition rate | 28.9% |
 | Average monthly income | ₹61,279 |
-| Current employees with 2+ risk factors | 1,118 |
+| Current employees with 2 or more risk factors | 1,118 |
 
-The data is synthetic (not real).
+The data is made up (synthetic). It is not from a real company.
 
 Columns: EMP_ID, AGE, DEPARTMENT, JOB_ROLE, GENDER, MARITAL_STATUS, PERFORMANCE_RATING, OVERTIME, DISTANCE_FROM_HOME, ATTRITION, MONTHLY_INCOME, YEARS_AT_COMPANY, JOB_SATISFACTION.
 
@@ -74,31 +75,33 @@ Columns: EMP_ID, AGE, DEPARTMENT, JOB_ROLE, GENDER, MARITAL_STATUS, PERFORMANCE_
 
 ## 📈 Power BI Dashboard
 
-I made a 3-page dashboard. The file is `powerbi/HR_Attrition_Dashboard.pbix` (open it with Power BI Desktop on Windows).
+I made a 3-page dashboard in Power BI. The file is `powerbi/HR_Attrition_Dashboard.pbix`. You need Power BI Desktop on Windows to open it.
 
-### 1. Executive Overview
-Total employees, employees left, attrition rate, average income, high-risk employees, and attrition by department, job role and tenure. It also has a decomposition tree.
+### Page 1: Executive Overview
+Total employees, employees who left, attrition rate, average income and high-risk employees. It also shows attrition by department, job role and tenure, and a decomposition tree.
 
 ![Executive overview](outputs/powerbi_executive_overview.png)
 
-### 2. Attrition Drivers
-Attrition rate by distance, income, age, performance, job satisfaction and overtime, plus a Key Influencers chart.
+### Page 2: Attrition Drivers
+Attrition rate by distance, income, age, performance rating, job satisfaction and overtime. There is also a Key Influencers chart.
 
 ![Attrition drivers](outputs/powerbi_attrition_drivers.png)
 
-### 3. Risk Analysis
-A simple risk score made by counting risk factors: overtime, low income, long distance, short tenure and low job satisfaction. Employees with 2 or more risk factors are marked high-risk. The page also shows a list of those employees.
+### Page 3: Risk Analysis
+For every employee I counted 5 risk factors: overtime, low income, long distance, short tenure and low job satisfaction. Employees with 2 or more risk factors are called high-risk. The page also has a table that lists the current employees with 2 or more risk factors, with the highest risk at the top.
 
 ![Risk analysis](outputs/powerbi_risk_analysis.png)
 
-**Dashboard features:** slicers (department, job role, overtime, age group, gender, marital status), KPI cards, decomposition tree, key influencers, and charts that filter each other when you click.
+### What you can do in the dashboard
+- Use slicers for department, job role, overtime, age group, gender and marital status
+- Click on a chart and the other charts change with it
+- Open the decomposition tree and key influencers charts
 
-### 🧮 DAX used
-
+### DAX in the dashboard
 - **Measures:** Total Employees, Employees Left, Attrition Rate, Avg Monthly Income, Avg Tenure, Avg Job Satisfaction, Overtime %, High-Risk Employees
-- **Calculated columns:** Age Group, Income Band, Tenure Band, Distance Band, Risk Factors (counts how many of the 5 risk factors an employee has)
+- **Calculated columns:** Age Group, Income Band, Tenure Band, Distance Band and Risk Factors (counts how many of the 5 risk factors an employee has)
 
-> The data is saved inside the .pbix file. Please don't click Refresh, because it was connected to Snowflake and my trial has ended.
+> The data is saved inside the .pbix file. Please do not click Refresh, because the file was connected to Snowflake and my trial has ended.
 
 ---
 
@@ -106,51 +109,51 @@ A simple risk score made by counting risk factors: overtime, low income, long di
 
 🔗 https://hr-attrition-intelligence-adzrfc9t4ztbjwglgojzvc.streamlit.app/
 
-- **Dashboard tab:** filter by department and tenure, see the main numbers and charts. Clicking a bar in the department chart filters the other charts.
-- **Predict Attrition tab:** enter an employee's details and the model gives a risk result.
+- **Dashboard tab:** filter by department and tenure and see the main numbers and charts. If you click a bar in the department chart, the charts below it change too.
+- **Predict Attrition tab:** type in an employee's details and the model shows a risk result.
 
 ![Streamlit dashboard](outputs/streamlit_dashboard.png)
 ![Streamlit predict](outputs/streamlit_predict.png)
 
 ---
 
-## 🔍 Key Insights
+## 🔍 What the data showed
 
 - Overall attrition is **28.9%**.
-- **Overtime** matters a lot. 41.6% of people who do overtime left, compared to 23.3% of people who don't.
-- **Low salary:** 42.9% left when monthly income was below 45K.
+- **Overtime:** 41.6% of people who do overtime left. For people who do not, it is 23.3%.
+- **Low pay:** 42.9% left when monthly income was below 45K.
 - **New joiners** (0 to 1 years) left the most, at 40.2%.
 - **Long distance:** people living 21 km or more away left more (36.3%).
 - **Job satisfaction:** ratings 1 and 2 had about 35 to 37% attrition. Ratings 3 and 4 had about 22%.
-- **Age** did not make much difference (about 28 to 30% in every age group).
-- **Risk factors stack up.** Attrition goes from 10.8% with no risk factors to about 77% with four.
-- **HR** has the highest attrition (33.4%) and **Finance** the lowest (24.7%).
+- **Age** did not make much difference. It was about 28 to 30% in every age group.
+- **More risk factors, more attrition.** It goes from 10.8% with no risk factors to about 77% with four.
+- **Departments:** HR has the highest attrition (33.4%) and Finance has the lowest (24.7%).
 
-These show what is linked to attrition. They do not prove what causes it.
+This shows what is linked to attrition. It does not prove what causes it.
 
 ---
 
-## 🤖 Machine Learning Model
+## 🤖 The Model
 
-I used a Random Forest. Only about 29% of employees left, so the classes are uneven. I used SMOTE on the training data to balance it, and tuned the model with GridSearchCV. I put SMOTE inside the cross-validation pipeline, so the validation scores are not made better by the extra synthetic rows. I kept 20% of the data aside for testing, and SMOTE was never applied to it.
+I used a Random Forest. Only about 29% of employees left, so there are many more "stayed" rows than "left" rows. To fix this I used SMOTE, which adds extra practice rows for the "left" group. I used SMOTE only on the training part and never on the test data, so the results stay fair. I tuned the model with GridSearchCV and kept 20% of the data aside for testing.
 
-| Result on test data (people who left) | Value |
+| Test result (people who left) | Value |
 |---|---|
 | Accuracy | 0.64 |
 | Precision | 0.39 |
 | Recall | 0.46 |
 | F1 score | 0.42 |
 
-**What this means:** the model is not very strong. It catches about 46% of the people who actually left, and about 39% of the people it flags as "will leave" really do leave. I think this is because the data is synthetic and does not have a very clear pattern. Accuracy is only 64%, which is lower than the 71% you would get by saying "No" for everyone, so accuracy alone is not a good way to judge this model. That is why I looked at precision and recall.
+**What this means:** the model is not very strong. It catches about 46% of the people who really left. Out of the people it marks as "will leave", about 39% really do leave. I think this happens because the data is made up and does not have a very clear pattern. Accuracy is only 64%. If a model said "stayed" for everyone it would get about 71%, so accuracy is not a good way to judge this model. That is why I looked at precision and recall.
 
-Things to know:
+Good to know:
 
 - Feature importance shows what the model used the most. It does not prove what causes people to leave.
-- The model uses age, gender and marital status. In a real HR system these should be checked or removed, because they can lead to unfair results.
+- The model uses age, gender and marital status. In a real HR system these should be checked or removed, because they can make the results unfair.
 
 ---
 
-## 📁 Project Structure
+## 📁 Folder structure
 
 ```
 HR-Attrition-Intelligence/
@@ -191,14 +194,14 @@ HR-Attrition-Intelligence/
 
 ---
 
-## ▶️ How to Run
+## ▶️ How to run it
 
 ```
 git clone https://github.com/ABHAYMARWADE2004/HR-Attrition-Intelligence.git
 cd HR-Attrition-Intelligence
 
 python -m venv venv
-venv\Scripts\activate
+venv\Scripts\activate          # on Mac or Linux: source venv/bin/activate
 pip install -r requirements.txt
 
 python main.py
@@ -207,9 +210,9 @@ python -m streamlit run app.py
 
 ---
 
-## 🚀 Future Improvements
+## 🚀 What I want to do next
 
-- Improve the model so it catches more of the people who leave (a higher recall)
+- Make the model catch more of the people who leave (a higher recall)
 - Take age, gender and marital status out of the model
 
 ---
