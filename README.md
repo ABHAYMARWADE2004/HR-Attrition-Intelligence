@@ -136,12 +136,12 @@ I used a Random Forest. Only about 29% of employees left, so the classes are une
 
 | Result on test data (people who left) | Value |
 |---|---|
-| Accuracy | 0.68 |
-| Precision | 0.42 |
-| Recall | 0.31 |
-| F1 score | 0.35 |
+| Accuracy | 0.64 |
+| Precision | 0.39 |
+| Recall | 0.46 |
+| F1 score | 0.42 |
 
-**What this means:** the model is not very strong. It catches about 31% of the people who actually left. I think this is because the data is synthetic and does not have a very clear pattern. I did not rely on accuracy, because a model that says "No" for everyone would also get around 71%.
+**What this means:** the model is not very strong. It catches about 46% of the people who actually left, and about 39% of the people it flags as "will leave" really do leave. I think this is because the data is synthetic and does not have a very clear pattern. Accuracy is only 64%, which is lower than the 71% you would get by saying "No" for everyone, so accuracy alone is not a good way to judge this model. That is why I looked at precision and recall.
 
 Things to know:
 

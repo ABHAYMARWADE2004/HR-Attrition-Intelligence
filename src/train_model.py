@@ -4,6 +4,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from imblearn.over_sampling import SMOTE
+from imblearn.pipeline import Pipeline as ImbPipeline
 import pickle
 
 df = pd.read_csv("data/hr_attrition_final.csv")
@@ -31,30 +32,28 @@ X = X.fillna(X.median(numeric_only=True))
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
-
-# ---- Balance training data with SMOTE ----
-smote = SMOTE(random_state=42)
-X_train_bal, y_train_bal = smote.fit_resample(X_train, y_train)
 print("Before SMOTE:", y_train.value_counts().to_dict())
-print("After SMOTE:", y_train_bal.value_counts().to_dict())
+
+# ---- SMOTE inside the pipeline ----
+# SMOTE now runs only on the training part of each cross-validation fold,
+# so the validation scores are not inflated by synthetic rows.
+pipe = ImbPipeline([
+    ("smote", SMOTE(random_state=42)),
+    ("rf", RandomForestClassifier(random_state=42)),
+])
 
 # ---- Hyperparameter tuning ----
 param_grid = {
-    'n_estimators': [100, 200, 300],
-    'max_depth': [5, 10, 15, None],
-    'min_samples_split': [2, 5, 10]
+    'rf__n_estimators': [100, 200, 300],
+    'rf__max_depth': [5, 10, 15, None],
+    'rf__min_samples_split': [2, 5, 10]
 }
 
-grid = GridSearchCV(
-    RandomForestClassifier(random_state=42),
-    param_grid,
-    cv=3,
-    scoring='f1',
-    n_jobs=-1
-)
-grid.fit(X_train_bal, y_train_bal)
+grid = GridSearchCV(pipe, param_grid, cv=3, scoring='f1', n_jobs=-1)
+grid.fit(X_train, y_train)          # original (unbalanced) training data
 
-model = grid.best_estimator_
+# Keep only the Random Forest, so app.py works exactly as before
+model = grid.best_estimator_.named_steps["rf"]
 print("\nBest params:", grid.best_params_)
 
 # ---- Evaluate on original (untouched) test set ----
