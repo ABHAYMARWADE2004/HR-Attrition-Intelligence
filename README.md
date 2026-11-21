@@ -1,8 +1,16 @@
 # 📊 HR Attrition Intelligence
 
-In this project, I worked on understanding why employees leave a company and how HR teams can identify possible attrition risks.
+An end-to-end **HR Analytics project** built using **AWS S3, Snowflake, SQL, Python, Machine Learning, Power BI, and Streamlit** to analyse employee attrition, understand workforce trends, and identify potential employee risks.
 
-I started with raw HR data, stored the files in AWS S3, cleaned and combined the data using SQL in Snowflake, and explored the results using Python. I also trained a Machine Learning model to predict employee attrition and built a live Streamlit application along with a 3-page Power BI dashboard.
+**Project Highlights:**
+
+- HR Data Cleaning & SQL Transformation
+- Exploratory Data Analysis (EDA)
+- AWS S3 & Snowflake Data Integration
+- Employee Attrition Prediction using Random Forest
+- Interactive 3-Page Power BI Dashboard
+- Streamlit Web Application for Analytics & Prediction
+- Business Insights and Employee Risk Analysis
 
 🔗 **Live Streamlit App:**
 
@@ -14,15 +22,16 @@ https://hr-attrition-intelligence-adzrfc9t4ztbjwglgojzvc.streamlit.app/
 
 This project is based on a classroom case study. The company used in the case study is called **TechNova**. It is a fictional company with around 5,000 employees across five departments: Sales, Engineering, HR, Marketing and Finance.
 
-In the case study, the company's attrition rate increased from 18% to 27% over two quarters. The HR team wanted a better way to understand employee attrition instead of looking only at employees who had already left.
+In the case study, the company's attrition rate increased from 18% to 27% over two quarters. The HR team wanted to understand why employees were leaving and identify possible attrition risks.
 
-My goal was to:
+Through this project, I wanted to:
 
 - Understand employee attrition patterns.
-- Identify factors associated with employees leaving.
-- Build a Machine Learning model to predict possible employee attrition.
-- Create an interactive dashboard for HR analysis.
-- Make the results available through a Streamlit application.
+- Find factors associated with employees leaving.
+- Analyse employee data using Python and SQL.
+- Build a Machine Learning model to predict possible attrition.
+- Create an interactive Power BI dashboard.
+- Develop a Streamlit application to explore data and make predictions.
 
 ---
 
@@ -42,7 +51,7 @@ My goal was to:
 
 ---
 
-## 🏗️ Project Flow
+## 🗺️ Project Flow
 
 The project follows this workflow:
 
@@ -67,32 +76,32 @@ Python Data Analysis & Machine Learning
       +--------------------+
       |                    |
       v                    v
-Streamlit App        Power BI Dashboard
+ Streamlit App        Power BI Dashboard
 ```
 
 ### How I worked on the project
 
-- **AWS S3:** I uploaded the original HR source files into an S3 bucket under the `raw/` folder.
+- **AWS S3:** Uploaded the original HR source files to an S3 bucket under the `raw/` folder.
 
-- **Snowflake:** I created an external stage connected to the S3 folder and loaded the three main source files into Snowflake raw tables using `COPY INTO`.
+- **Snowflake:** Created an external stage connected to the S3 folder and loaded the source files into Snowflake raw tables using `COPY INTO`.
 
-- **SQL:** I cleaned the data by trimming extra spaces, correcting data types, removing duplicates and handling missing job satisfaction values. I then joined the tables to create the final table named `hr_attrition_final`.
+- **SQL:** Cleaned the data by removing extra spaces, correcting data types, removing duplicates and handling missing job satisfaction values. I then joined the tables to create the final table named `hr_attrition_final`.
 
-- **Python:** I used `src/eda.py` for data analysis and charts. I used `src/train_model.py` to train and evaluate the Random Forest model.
+- **Python:** Used Python for data analysis, visualization and Machine Learning. The main scripts are `src/eda.py` and `src/train_model.py`.
 
-- **Streamlit:** I created a web application where users can explore attrition patterns and check employee attrition predictions.
+- **Streamlit:** Built an application where users can explore attrition patterns and check employee attrition predictions.
 
-- **Power BI:** I created a 3-page interactive dashboard to study overall attrition, factors associated with attrition and employee risk levels.
+- **Power BI:** Created a 3-page interactive dashboard to analyse overall attrition, factors associated with attrition and employee risk levels.
 
-The SQL queries used in the project are available in `sql/pipeline.sql`.
+The SQL queries used in this project are available in `sql/pipeline.sql`.
 
-> **Note about Snowflake:** My Snowflake free trial has ended. During development, I used Snowflake for data loading, SQL cleaning and transformation. I saved a CSV copy of the final dataset at `data/hr_attrition_final.csv`. The Streamlit application now reads this saved dataset instead of connecting to Snowflake. The `rebuild_data.py` script can recreate the final dataset from the source files using the project's cleaning steps.
+> **Note about Snowflake:** My Snowflake free trial has ended. During development, I used Snowflake for data loading, SQL cleaning and transformation. I saved the final dataset as `data/hr_attrition_final.csv`. The Streamlit application currently uses this saved dataset instead of connecting to Snowflake. The `rebuild_data.py` script can recreate the final dataset from the source files.
 
 ---
 
 ## 📌 Key KPIs
 
-The final dataset contains 4,700 employee records.
+The final dataset contains **4,700 employee records**.
 
 | Metric | Value |
 |---|---:|
@@ -106,13 +115,13 @@ The final dataset contains 4,700 employee records.
 
 `EMP_ID`, `AGE`, `DEPARTMENT`, `JOB_ROLE`, `GENDER`, `MARITAL_STATUS`, `PERFORMANCE_RATING`, `OVERTIME`, `DISTANCE_FROM_HOME`, `ATTRITION`, `MONTHLY_INCOME`, `YEARS_AT_COMPANY`, `JOB_SATISFACTION`
 
-The dataset is synthetic and was used for learning and project development. It does not contain real employee records from an actual company.
+The dataset is synthetic and was created for learning and project development. It does not contain real employee records from an actual company.
 
 ---
 
 ## 📈 Power BI Dashboard
 
-I created a 3-page Power BI dashboard to make the attrition data easier to understand.
+I created a 3-page Power BI dashboard to explore employee attrition from different angles.
 
 The Power BI file is available here:
 
@@ -122,7 +131,13 @@ You need Power BI Desktop on Windows to open the file.
 
 ### 1. Executive Overview
 
-This page gives an overall view of the company, including total employees, employees who left, attrition rate, average monthly income and high-risk employees.
+This page gives an overall view of the company through important KPIs such as:
+
+- Total Employees
+- Employees Who Left
+- Attrition Rate
+- Average Monthly Income
+- High-Risk Employees
 
 It also includes attrition analysis by department, job role and tenure, along with a decomposition tree.
 
@@ -130,7 +145,7 @@ It also includes attrition analysis by department, job role and tenure, along wi
 
 ### 2. Attrition Drivers
 
-This page helps explore how attrition rates differ across factors such as:
+This page explores how attrition rates differ across different employee factors:
 
 - Distance from home
 - Monthly income
@@ -196,7 +211,7 @@ The Risk Factors column counts how many of the five defined risk factors apply t
 
 ## 🖥️ Streamlit App
 
-I also deployed the project as a live Streamlit application.
+I also built and deployed a Streamlit application for this project.
 
 🔗 **Live App:**
 
@@ -217,15 +232,15 @@ The application has two main sections:
 
 - Enter employee details.
 - Submit the information to the trained Random Forest model.
-- View the model's attrition prediction.
+- View the predicted attrition result and probability.
 
 ![Streamlit Prediction](outputs/streamlit_predict.png)
 
-The application currently uses the saved CSV dataset and original trained model available in the project.
+The application currently uses the saved CSV dataset and trained model available in the project. A live Snowflake connection is not required to use the deployed application.
 
 ---
 
-## 🔍 Key Insights
+## 🔑 Key Insights
 
 During my analysis, I found the following patterns in the dataset:
 
@@ -234,12 +249,12 @@ During my analysis, I found the following patterns in the dataset:
 - **Monthly Income:** Employees earning below ₹45,000 had an attrition rate of 42.9%.
 - **New Employees:** Employees with 0 to 1 year of experience at the company had the highest attrition rate, at 40.2%.
 - **Distance from Home:** Employees living 21 km or more away had an attrition rate of 36.3%.
-- **Job Satisfaction:** Employees with satisfaction ratings of 1 and 2 had attrition rates of around 35% to 37%. Ratings of 3 and 4 had rates of around 22%.
+- **Job Satisfaction:** Employees with satisfaction ratings of 1 and 2 had attrition rates of around 35% to 37%. Ratings of 3 and 4 had rates around 22%.
 - **Age:** Attrition rates were fairly similar across age groups, ranging from around 28% to 30%.
 - **Risk Factors:** Attrition increased as the number of risk factors increased. It ranged from 10.8% for employees with no risk factors to around 77% for employees with four risk factors.
 - **Departments:** HR had the highest attrition rate at 33.4%, while Finance had the lowest at 24.7%.
 
-These results show patterns and relationships in the dataset. They do not prove that any particular factor directly causes an employee to leave.
+These findings show patterns in the dataset. They do not prove that any particular factor directly causes an employee to leave.
 
 ---
 
@@ -247,7 +262,7 @@ These results show patterns and relationships in the dataset. They do not prove 
 
 For attrition prediction, I used a **Random Forest Classifier**.
 
-The dataset was imbalanced because more employees stayed than left. To handle this, I used SMOTE to create additional training samples for the minority class.
+The dataset was imbalanced because more employees stayed than left. I used SMOTE during training to create additional samples for the minority class.
 
 I also used GridSearchCV to test different model settings and select the best parameters.
 
@@ -277,7 +292,7 @@ The following results are from my original trained model.
 
 The model correctly identified around 46% of the employees who actually left.
 
-Its precision was around 39%, which means that among the employees predicted as likely to leave, around 39% actually left in the test dataset.
+Its precision was around 39%. This means that among the employees predicted as likely to leave, around 39% actually left in the test dataset.
 
 The model is not highly accurate yet, and there is room for improvement.
 
@@ -295,7 +310,7 @@ That is why I also considered precision, recall and F1-score while evaluating th
 
 ---
 
-## 📁 Project Structure
+## 📂 Project Structure
 
 ```text
 HR-Attrition-Intelligence/
@@ -416,5 +431,3 @@ Aspiring Data Analyst | Data Science & AI Enthusiast
 - **LinkedIn:** https://www.linkedin.com/in/abhay-marwade-681108295
 
 This project helped me gain practical experience in data cleaning, SQL, Python, Machine Learning, Power BI and building a Streamlit application.
-
-⭐ If you find this project useful, feel free to give the repository a star!
