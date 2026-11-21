@@ -157,7 +157,7 @@ with tab2:
     with col2:
         overtime = st.selectbox("OverTime", encoders['OVERTIME'].classes_)
         distance = st.number_input("Distance From Home (km)", 1, 30, 10)
-        income = st.number_input("Monthly Income", 20000, 100000, 50000)
+        income = st.number_input("Monthly Income", 20000, 103924, 50000)
         years = st.number_input("Years At Company", 0, 20, 3)
         satisfaction = st.slider("Job Satisfaction", 1, 4, 3)
 
